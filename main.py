@@ -6,7 +6,6 @@ It will then create a 25x300 list of rgb values and save to an excel sheet
 """
 
 from PIL import Image
-import numpy as np
 
 img = Image.open("./img/20131001_1100.jpg")
 total_pixels = []
