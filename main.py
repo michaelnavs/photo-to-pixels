@@ -43,7 +43,7 @@ def add_25_by_300_rgb_to_excel(
 
 def main() -> None:
     image_filenames = glob.glob("./images/*.jpg")
-    writer = pd.ExcelWriter("test.xlsx", engine="xlsxwriter")
+    writer = pd.ExcelWriter("dataset.xlsx", engine="xlsxwriter")
     for image_filename in image_filenames:
         image = Image.open(image_filename)
         width, height = image.size
