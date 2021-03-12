@@ -12,7 +12,7 @@ import glob
 
 def create_pixel_list(img: Image, width: int, height: int) -> List:
     # get rgb values for each pixel in the image
-    pixels = []
+    pixels = []  # each index stores tuple of rgb values
     for y in range(height):
         for x in range(width):
             pixels.append(img.getpixel((x, y)))
