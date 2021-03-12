@@ -52,6 +52,7 @@ def main() -> None:
         add_25_by_300_rgb_to_excel(pixel_patches, image_filename[9:], writer)
         print(f"working on pixel dataset for {image_filename}")
     writer.save()
+    print("Done!")
 
 
 if __name__ == "__main__":
