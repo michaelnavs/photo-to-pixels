@@ -34,23 +34,29 @@ def create_25_by_300_rgb_values(pixel_array: List, width: int, height: int) -> L
 
 
 def add_25_by_300_rgb_to_excel(
-    ten_by_ten_patch: List, image_name: str, writer: pd.ExcelWriter
+    ten_by_ten_patch: List, writer: pd.ExcelWriter, row_position: int
 ) -> None:
     # adds 25x300 dataset to an excel sheet
     ten_by_ten_df = pd.DataFrame(ten_by_ten_patch)
-    ten_by_ten_df.to_excel(writer, sheet_name=image_name, index=False)
+    ten_by_ten_df.to_excel(
+        writer, sheet_name="data", index=False, startrow=row_position, header=False
+    )
 
 
 def main() -> None:
     image_filenames = glob.glob("./images/*.jpg")
+    image_filenames.sort()
     writer = pd.ExcelWriter("dataset.xlsx", engine="xlsxwriter")
+    row_position = 0
+    row_offset = 25
     for image_filename in image_filenames:
+        print(f"working on pixel dataset for {image_filename}")
         image = Image.open(image_filename)
         width, height = image.size
         pixels = create_pixel_list(image, width, height)
         pixel_patches = create_25_by_300_rgb_values(pixels, width, height)
-        add_25_by_300_rgb_to_excel(pixel_patches, image_filename[9:], writer)
-        print(f"working on pixel dataset for {image_filename}")
+        add_25_by_300_rgb_to_excel(pixel_patches, writer, row_position)
+        row_position += row_offset
     writer.save()
     print("Done!")
 
