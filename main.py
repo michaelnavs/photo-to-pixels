@@ -44,11 +44,14 @@ def add_25_by_300_rgb_to_excel(
 
 
 def main() -> None:
-    image_filenames = glob.glob("./images/*.jpg")
-    image_filenames.sort()  # alphabetically sort the list
-    writer = pd.ExcelWriter("dataset.xlsx", engine="xlsxwriter")
     row_position = 0
     row_offset = 25
+
+    image_filenames = glob.glob("./images/*.jpg")
+    image_filenames.sort()  # alphabetically sort the list
+
+    writer = pd.ExcelWriter("dataset.xlsx", engine="xlsxwriter")
+
     for image_filename in image_filenames:
         print(f"working on pixel dataset for {image_filename}")
         image = Image.open(image_filename)
