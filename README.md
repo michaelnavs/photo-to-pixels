@@ -49,7 +49,7 @@ an excel sheet. In a seperate program, I attached turbidity values to the end of
 
 2. Clone the repo
    ```sh
-   git clone https://github.com/michaelnavs/phototopixels.git
+   git clone https://github.com/michaelnavs/pixelize.git
    ```
 3. Create virtual environment
    ```sh
