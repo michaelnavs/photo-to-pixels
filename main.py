@@ -34,9 +34,11 @@ def create_25_by_300_rgb_values(pixel_array: List, width: int, height: int) -> L
 
 
 def remove_red_values(pixel_patches: List) -> List:
+    # populate indices list with multiples of 3 until 300
     indices = [iter for iter in range(300) if iter % 3 == 0]
     blue_green_patches = []
     for patch in pixel_patches:
+        # sort indices from high to low, need to remove values from patch with higher index to not affect lower indexes
         for i in sorted(indices, reverse=True):
             del patch[i]
         blue_green_patches.append(patch)
@@ -45,6 +47,7 @@ def remove_red_values(pixel_patches: List) -> List:
 
 
 def get_blue_green_ratios(blue_green_patches: List) -> List:
+    # created patches of Blue / Green ratio values
     blue_green_ratio_patches = []
     for patch in blue_green_patches:
         blue_green_ratio_patch = []
