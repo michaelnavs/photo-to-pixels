@@ -40,9 +40,19 @@ def remove_red_values(pixel_patches: List) -> List:
         for i in sorted(indices, reverse=True):
             del patch[i]
         blue_green_patches.append(patch)
-        break
 
     return blue_green_patches
+
+
+def get_blue_green_ratios(blue_green_patches: List) -> List:
+    blue_green_ratio_patches = []
+    for patch in blue_green_patches:
+        blue_green_ratio_patch = []
+        for i in range(0, len(patch), 2):
+            blue_green_ratio = patch[i + 1] / patch[i]
+            blue_green_ratio_patch.append(blue_green_ratio)
+        blue_green_ratio_patches.append(blue_green_ratio_patch)
+    return blue_green_ratio_patches
 
 
 def add_25_by_300_rgb_to_excel(
@@ -59,7 +69,7 @@ def main() -> None:
     row_position = 0
     row_offset = 25
 
-    image_filenames = glob.glob("./images/20130909_0836.jpg")
+    image_filenames = glob.glob("./images/*.jpg")
     image_filenames.sort()  # alphabetically sort the list
 
     writer = pd.ExcelWriter("dataset.xlsx", engine="xlsxwriter")
@@ -71,8 +81,8 @@ def main() -> None:
         pixels = create_pixel_list(image, width, height)
         pixel_patches = create_25_by_300_rgb_values(pixels, width, height)
         blue_green_pixel_patches = remove_red_values(pixel_patches)
-        # blue_green_ratios = get_blue_green_ratios(blue_green_pixel_patches)
-        # add_25_by_300_rgb_to_excel(blue_green_ratios, writer, row_position)
+        blue_green_ratios = get_blue_green_ratios(blue_green_pixel_patches)
+        add_25_by_300_rgb_to_excel(blue_green_ratios, writer, row_position)
         row_position += row_offset
     writer.save()
     print("Done!")
