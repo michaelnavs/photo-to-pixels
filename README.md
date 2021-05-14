@@ -47,27 +47,27 @@ an excel sheet. In a seperate program, I attached turbidity values to the end of
 
 ### Installation
 
-2. Clone the repo
+1. Clone the repo
    ```sh
    git clone https://github.com/michaelnavs/pixelize.git
    ```
-3. Create virtual environment
+2. Create virtual environment
    ```sh
    python3 -m venv venv
    ```
-4. Activate virtual environmnt
+3. Activate virtual environmnt
    ```sh
    source venv/bin/activate
    ```
-5. Install required packages
+4. Install required packages
 
    ```sh
    pip install -r requirements.txt
    ```
 
-6. Store all your images in a directory called "images" in the root of the project
+5. Store all your images in a directory called "images" in the root of the project
 
-7. Run the program
+6. Run the program
    ```
    python main.py
    ```
