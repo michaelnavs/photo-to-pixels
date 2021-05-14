@@ -1,3 +1,68 @@
+### Images ###
+# JPEG
+*.jpg
+*.jpeg
+*.jpe
+*.jif
+*.jfif
+*.jfi
+
+# JPEG 2000
+*.jp2
+*.j2k
+*.jpf
+*.jpx
+*.jpm
+*.mj2
+
+# JPEG XR
+*.jxr
+*.hdp
+*.wdp
+
+# Graphics Interchange Format
+*.gif
+
+# RAW
+*.raw
+
+# Web P
+*.webp
+
+# Portable Network Graphics
+*.png
+
+# Animated Portable Network Graphics
+*.apng
+
+# Multiple-image Network Graphics
+*.mng
+
+# Tagged Image File Format
+*.tiff
+*.tif
+
+# Scalable Vector Graphics
+*.svg
+*.svgz
+
+# Portable Document Format
+*.pdf
+
+# X BitMap
+*.xbm
+
+# BMP
+*.bmp
+*.dib
+
+# ICO
+*.ico
+
+# 3D Images
+*.3dm
+*.max
+
 ### Linux ###
 *~
 
@@ -12,6 +77,35 @@
 
 # .nfs files are created when an open file is removed but is still being accessed
 .nfs*
+
+### macOS ###
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
@@ -30,8 +124,6 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
-lib64/
 parts/
 sdist/
 var/
@@ -109,6 +201,9 @@ ipython_config.py
 #   install all needed dependencies.
 #Pipfile.lock
 
+# poetry
+#poetry.lock
+
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow
 __pypackages__/
 
@@ -120,8 +215,9 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
-.venv
+# .env
+.env/
+.venv/
 env/
 venv/
 ENV/
@@ -150,8 +246,15 @@ dmypy.json
 # pytype static type analyzer
 .pytype/
 
+# operating system-related files
+# file properties cache/storage on macOS
+*.DS_Store
+# thumbnail cache on Windows
+Thumbs.db
+
 # profiling data
 .prof
+
 
 ### venv ###
 # Virtualenv
@@ -163,30 +266,30 @@ dmypy.json
 [Ll]ocal
 [Ss]cripts
 pyvenv.cfg
+.venv
 pip-selfcheck.json
 
-### Vim ###
-# Swap
-[._]*.s[a-v][a-z]
-!*.svg  # comment out if you don't need vector files
-[._]*.sw[a-p]
-[._]s[a-rt-v][a-z]
-[._]ss[a-gi-z]
-[._]sw[a-p]
+### Windows ###
+# Windows thumbnail cache files
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
 
-# Session
-Session.vim
-Sessionx.vim
+# Dump file
+*.stackdump
 
-# Temporary
-.netrwhist
-# Auto-generated tag files
-tags
-# Persistent undo
-[._]*.un~
+# Folder config file
+[Dd]esktop.ini
 
-.vim
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
 
-*.xlsx
+# Windows Installer files
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
 
-images/
+# Windows shortcuts
+*.lnk
