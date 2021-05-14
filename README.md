@@ -60,14 +60,14 @@ an excel sheet. In a seperate program, I attached turbidity values to the end of
    source venv/bin/activate
    ```
 5. Install required packages
+
    ```sh
    pip install -r requirements.txt
    ```
-6. cd in server
-   ```sh
-   cd server
-   ```
-7. Start development server
+
+6. Store all your images in a directory called "images" in the root of the project
+
+7. Run the program
    ```
    python main.py
    ```
