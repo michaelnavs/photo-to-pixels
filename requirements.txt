@@ -14,6 +14,7 @@ numpy @ file:///Users/runner/miniforge3/conda-bld/numpy_1616933195014/work
 pandas==1.2.4
 parso==0.8.2
 pathspec==0.8.1
+Pillow==8.2.0
 pylint==2.8.2
 pynvim==0.4.3
 python-dateutil==2.8.1
