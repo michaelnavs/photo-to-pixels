@@ -23,13 +23,13 @@ def main() -> None:
         for x in range(width):
             for y in range(height):
                 pixel = image.getpixel((x, y))  # tuple of RGB values -> (R, G, B)
-                # skip pixels that are pure black, pure white, and are not blue sky pixels
+                # skip pixels that are pure black, pure white, and not blue sky pixels
                 if is_black(pixel) or is_white(pixel) or not (is_blue_sky):
                     continue
                 altitude = get_altitude(x, y)
                 azimuth = get_azimuth(x, y)
                 central_angle = get_central_angle(altitude, azimuth)
-                # if alititude and central angle does not meet the criteria, set RGB value to black
+                # if alititude and central angle do not meet the criteria, set RGB value to black
                 if not (selection_criteria(altitude, central_angle)):
                     image.putpixel((x, y), (0, 0, 0))
                 image.show()
