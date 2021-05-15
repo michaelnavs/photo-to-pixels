@@ -1,7 +1,7 @@
 from PIL import Image
 import pandas as pd
 import glob
-from .utils import (
+from utils import (
     is_black,
     is_white,
     is_blue_sky,
