@@ -1,3 +1,7 @@
+def center_x_y():
+    pass
+
+
 def is_black():
     # slide 14
     pass
