@@ -2,6 +2,7 @@ from PIL import Image
 import pandas as pd
 import glob
 from utils import (
+    calculate_theta,
     center_x_y,
     is_black,
     is_white,
@@ -28,11 +29,12 @@ def main() -> None:
                 if is_black(pixel) or is_white(pixel) or not (is_blue_sky):
                     continue
                 center_x, center_y = center_x_y(x, y)
+                theta = calculate_theta()
                 altitude = get_altitude(center_x, center_y)
-                azimuth = get_azimuth(center_x, center_y)
+                azimuth = get_azimuth(center_x, center_y, theta)
                 central_angle = get_central_angle(altitude, azimuth)
                 # if alititude and central angle do not meet the criteria, set RGB value to black
-                if not (selection_criteria(altitude, central_angle)):
+                if not (selection_criteria(altitude, central_angle, theta)):
                     image.putpixel((x, y), (0, 0, 0))
         image.show()
 
