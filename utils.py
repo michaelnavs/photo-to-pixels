@@ -17,6 +17,10 @@ def is_blue_sky():
     pass
 
 
+def is_sky_region():
+    pass
+
+
 def selection_criteria():
     # ppt slide 13
     pass
