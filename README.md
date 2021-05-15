@@ -6,7 +6,7 @@
   <h3 align="center">Photo To Pixels</h3>
 
   <p align="center">
-   Transform an image into a dataset of pixels
+   Transform an image into a dataset of RGB values
   </p>
 </p>
 
@@ -14,11 +14,13 @@
 
 ## About The Project
 
-<!-- Add demo here!! -->
-
-Apart of my NSF Research project, I was tasked with taking 50x50 images and creating a dataset of pixels.
-For each image, I had to create 25 10x10 patches, then add the rgb values for each pixel in the 10x10 to
-an excel sheet. In a seperate program, I attached turbidity values to the end of each row of data.
+Apart of my NSF Research project, I was tasked with taking images of the sky
+and creating a dataset of RGB values. In the Version 1, for each image, I had
+to create 25 10x10 patches, then add the rgb values for each pixel in the 10x10 to
+an excel sheet. In a seperate program, I attached turbidity values to the end
+of each row of data. In Version 2, for each pixel, I calculated a ratio of Blue/Green
+and created a new dataset with those ratio values. Again, the turbidity values
+were appended to the end of each row.
 
 ### Built With
 
@@ -65,9 +67,7 @@ an excel sheet. In a seperate program, I attached turbidity values to the end of
    pip install -r requirements.txt
    ```
 
-5. Store all your images in a directory called "images" in the root of the project
-
-6. Run the program
+5. Run the program
    ```
    python main.py
    ```
