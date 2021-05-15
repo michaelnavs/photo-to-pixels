@@ -14,6 +14,7 @@ def is_blue_sky():
 
 
 def selection_criteria():
+    # ppt slide 13
     pass
 
 
