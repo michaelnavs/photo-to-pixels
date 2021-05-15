@@ -32,7 +32,7 @@ def main() -> None:
                 # if alititude and central angle do not meet the criteria, set RGB value to black
                 if not (selection_criteria(altitude, central_angle)):
                     image.putpixel((x, y), (0, 0, 0))
-                image.show()
+        image.show()
 
 
 if __name__ == "__main__":
