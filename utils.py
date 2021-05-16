@@ -12,6 +12,10 @@ def is_white():
     pass
 
 
+def is_sky_region():
+    pass
+
+
 def is_blue_sky():
     # ppt slide 13
     pass
