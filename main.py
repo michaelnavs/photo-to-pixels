@@ -26,8 +26,10 @@ def main() -> None:
         for x in range(width):
             for y in range(height):
                 pixel = image.getpixel((x, y))  # tuple of RGB values -> (R, G, B)
-                center_x, center_y = center_x_y(x, y)
-                theta = calculate_theta(center_x, center_y)
+                center_x, center_y = center_x_y(
+                    x, y
+                )  # get new x and y values based on center of sky region
+                theta = calculate_theta(center_x, center_y)  # get theta
                 # skip pixels that are pure black, pure white, and not blue sky pixels
                 if (
                     is_black(pixel)
