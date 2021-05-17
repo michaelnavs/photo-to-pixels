@@ -4,11 +4,11 @@ from typing import Tuple
 
 
 def center_x_y(x: int, y: int) -> Tuple:
-    x_diff = 357
-    y_diff = 255
+    origin_x = 357
+    origin_y = 255
 
-    new_x = x - x_diff
-    new_y = y_diff - y
+    new_x = x - origin_x
+    new_y = origin_y - y
 
     return new_x, new_y
 
