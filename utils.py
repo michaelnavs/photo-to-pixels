@@ -1,5 +1,16 @@
-def center_x_y():
-    pass
+from typing import Tuple
+
+from typing import Tuple
+
+
+def center_x_y(x: int, y: int) -> Tuple:
+    origin_x = 357
+    origin_y = 255
+
+    new_x = x - origin_x
+    new_y = origin_y - y
+
+    return new_x, new_y
 
 
 def is_black():
