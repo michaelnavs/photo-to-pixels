@@ -21,8 +21,11 @@ def is_white(pixel: Tuple) -> bool:
     return pixel == (255, 255, 255)
 
 
-def is_sky_region():
-    pass
+def is_sky_region(x, y, theta):
+    r = math.sqrt(x ** 2 + y ** 2)
+    rho = calculate_rho(theta)
+
+    return r < rho
 
 
 def is_blue_sky():
@@ -84,7 +87,9 @@ def calculate_rho(theta):
     A = 240
     B = 218
 
-    rho = (A*B)/(math.sqrt((B**2)*(math.cos(theta)**2) + (A**2 * math.sin(theta)**2)))
+    rho = (A * B) / (
+        math.sqrt((B ** 2) * (math.cos(theta) ** 2) + (A ** 2 * math.sin(theta) ** 2))
+    )
 
     return rho
 
