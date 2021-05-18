@@ -2,7 +2,7 @@ from PIL import Image
 import pandas as pd
 import glob
 from utils import (
-    calculate_theta,
+    calculate_theta_psi,
     center_x_y,
     is_black,
     is_white,
@@ -23,13 +23,15 @@ def main() -> None:
         print(f"{image_filename}...")  # display file name to see progress
         image = Image.open(image_filename)  # create instance of Pillow.Image
         width, height = image.size
+        sun_altitude = 45.6  # sun_altitudes[i]
+        sun_azimuth = 131.1  # sun_azimuths[i]
         for x in range(width):
             for y in range(height):
                 pixel = image.getpixel((x, y))  # tuple of RGB values -> (R, G, B)
                 center_x, center_y = center_x_y(
                     x, y
                 )  # get new x and y values based on center of sky region
-                theta = calculate_theta(center_x, center_y)  # get theta
+                theta, psi = calculate_theta_psi(center_x, center_y)  # get theta
                 # skip pixels that are pure black, pure white, and not blue sky pixels
                 if (
                     is_black(pixel)
@@ -39,8 +41,10 @@ def main() -> None:
                 ):
                     continue
                 altitude = get_altitude(center_x, center_y)
-                azimuth = get_azimuth(center_x, center_y, theta)
-                central_angle = get_central_angle(altitude, azimuth)
+                azimuth = get_azimuth(psi)
+                central_angle = get_central_angle(
+                    altitude, azimuth, sun_altitude, sun_azimuth
+                )
                 # if alititude and central angle do not meet the criteria, set RGB value to black
                 if not (selection_criteria(altitude, central_angle)):
                     image.putpixel((x, y), (0, 0, 0))
