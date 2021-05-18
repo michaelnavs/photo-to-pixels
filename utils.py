@@ -13,14 +13,12 @@ def center_x_y(x: int, y: int) -> Tuple:
     return new_x, new_y
 
 
-def is_black():
-    # slide 14
-    pass
+def is_black(pixel: Tuple) -> bool:
+    return pixel == (0, 0, 0)
 
 
-def is_white():
-    # slide 14
-    pass
+def is_white(pixel: Tuple) -> bool:
+    return pixel == (255, 255, 255)
 
 
 def is_sky_region():
@@ -41,33 +39,44 @@ def get_altitude(center_x, center_y):
     # e is epsilon
     e = 0.417
 
-    a = math.sqrt(center_x**2 + (center_y**2)/(1-e**2))
-    
-    altitude = -0.3253*a + 92.415
+    a = math.sqrt(center_x ** 2 + (center_y ** 2) / (1 - e ** 2))
+
+    altitude = -0.3253 * a + 92.415
 
     return altitude
-    
 
 
 def get_azimuth(psi):
-    azimuth = 0.9625*psi + 1.7688
+    azimuth = 0.9625 * psi + 1.7688
 
     return azimuth
 
 
-def get_central_angle(altitude_point, azimuth_point,
-                        altitude_sun, azimuth_sun):
+def get_central_angle(altitude_point, azimuth_point, altitude_sun, azimuth_sun):
     azimuth_1_2 = azimuth_sun - azimuth_point
 
-    tan_central_angle = (math.sqrt((math.cos(altitude_point)*math.sin(altitude_sun) - math.sin(altitude_point)*math.cos(altitude_sun)*math.cos(azimuth_1_2))**2+(math.cos(altitude_sun)*math.sin(azimuth_1_2))**2))/(math.sin(altitude_point)*math.sin(altitude_sun)
-                            + math.cos(altitude_point)*math.cos(altitude_sun)*math.cos(azimuth_1_2))
+    tan_central_angle = (
+        math.sqrt(
+            (
+                math.cos(altitude_point) * math.sin(altitude_sun)
+                - math.sin(altitude_point)
+                * math.cos(altitude_sun)
+                * math.cos(azimuth_1_2)
+            )
+            ** 2
+            + (math.cos(altitude_sun) * math.sin(azimuth_1_2)) ** 2
+        )
+    ) / (
+        math.sin(altitude_point) * math.sin(altitude_sun)
+        + math.cos(altitude_point) * math.cos(altitude_sun) * math.cos(azimuth_1_2)
+    )
 
     # tangent to radians by atan()
     central_angle = math.atan(tan_central_angle)
 
-    if (central_angle < 0):
+    if central_angle < 0:
         central_angle += math.radians(180)
-    
+
     return math.degrees(central_angle)
 
 
