@@ -37,9 +37,16 @@ def selection_criteria():
     pass
 
 
-def get_altitude():
-    # ppt slide 6
-    pass
+def get_altitude(center_x, center_y):
+    # e is epsilon
+    e = 0.417
+
+    a = sqrt(center_x**2 + (center_y**2)/(1-e**2))
+    
+    altitude = -0.3253*a + 92.415
+
+    return altitude
+    
 
 
 def get_azimuth():
