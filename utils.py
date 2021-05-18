@@ -49,8 +49,8 @@ def get_altitude(center_x, center_y):
     
 
 
-def get_azimuth():
-    # ppt slide 7
+def get_azimuth(x, y, theta):
+
     pass
 
 
@@ -64,11 +64,5 @@ def calculate_rho():
     pass
 
 
-def calculate_theta():
-    # ppt slide 7
-    pass
-
-
-def calculate_psi():
-    # ppt slide 7
-    pass
+def calculate_theta_psi(x, y):
+    return theta, psi
