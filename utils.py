@@ -86,5 +86,16 @@ def calculate_rho():
 
 
 def calculate_theta_psi(x, y):
+    theta = psi = 0
 
-    return theta, psi
+    if x > 0 and y > 0:
+        theta = math.atan(y / x)
+        psi = theta + 3 * math.pi / 2
+    elif x > 0 and y < 0:
+        theta = 2 * math.pi + math.atan(y / x)
+        psi = theta - math.pi / 2
+    elif (x < 0 and y > 0) or (x < 0 and y < 0):
+        theta = math.pi + math.atan(y / x)
+        psi = theta - math.pi / 2
+
+    return theta, math.degrees(psi)  # theta is in radians, psi is in degrees
