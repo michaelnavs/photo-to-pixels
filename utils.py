@@ -80,9 +80,13 @@ def get_central_angle(altitude_point, azimuth_point, altitude_sun, azimuth_sun):
     return math.degrees(central_angle)
 
 
-def calculate_rho():
-    # ppt slide 14
-    pass
+def calculate_rho(theta):
+    A = 240
+    B = 218
+
+    rho = (A*B)/(math.sqrt((B**2)*(math.cos(theta)**2) + (A**2 * math.sin(theta)**2)))
+
+    return rho
 
 
 def calculate_theta_psi(x, y):
