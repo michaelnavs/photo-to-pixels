@@ -1,6 +1,6 @@
 from typing import Tuple
 
-from typing import Tuple
+import math
 
 
 def center_x_y(x: int, y: int) -> Tuple:
@@ -41,7 +41,7 @@ def get_altitude(center_x, center_y):
     # e is epsilon
     e = 0.417
 
-    a = sqrt(center_x**2 + (center_y**2)/(1-e**2))
+    a = math.sqrt(center_x**2 + (center_y**2)/(1-e**2))
     
     altitude = -0.3253*a + 92.415
 
@@ -49,14 +49,26 @@ def get_altitude(center_x, center_y):
     
 
 
-def get_azimuth(x, y, theta):
+def get_azimuth(psi):
+    azimuth = 0.9625*psi + 1.7688
 
-    pass
+    return azimuth
 
 
-def get_central_angle():
-    # ppt slide 9
-    pass
+def get_central_angle(altitude_point, azimuth_point,
+                        altitude_sun, azimuth_sun):
+    azimuth_1_2 = azimuth_sun - azimuth_point
+
+    tan_central_angle = (math.sqrt((math.cos(altitude_point)*math.sin(altitude_sun) - math.sin(altitude_point)*math.cos(altitude_sun)*math.cos(azimuth_1_2))**2+(math.cos(altitude_sun)*math.sin(azimuth_1_2))**2))/(math.sin(altitude_point)*math.sin(altitude_sun)
+                            + math.cos(altitude_point)*math.cos(altitude_sun)*math.cos(azimuth_1_2))
+
+    # tangent to radians by atan()
+    central_angle = math.atan(tan_central_angle)
+
+    if (central_angle < 0):
+        central_angle += math.radians(180)
+    
+    return math.degrees(central_angle)
 
 
 def calculate_rho():
@@ -65,4 +77,5 @@ def calculate_rho():
 
 
 def calculate_theta_psi(x, y):
+
     return theta, psi
