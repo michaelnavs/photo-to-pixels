@@ -16,6 +16,7 @@ from utils import (
 
 
 def main() -> None:
+    BLACK_PIXEL = (0, 0, 0)
     image_filenames = glob.glob("./images/*.jpg")
     # image_filenames.sort() # alaphabetically sort the list of file names
 
@@ -38,6 +39,7 @@ def main() -> None:
                     or is_white(pixel)
                     or not (is_sky_region(center_x, center_y, theta))
                 ):
+                    image.putpixel((x, y), BLACK_PIXEL)
                     continue
                 altitude = get_altitude(center_x, center_y)
                 azimuth = get_azimuth(psi)
@@ -48,7 +50,7 @@ def main() -> None:
                 if not (selection_criteria(altitude, central_angle)) and not (
                     is_blue_sky(pixel)
                 ):
-                    image.putpixel((x, y), (0, 0, 0))
+                    image.putpixel((x, y), BLACK_PIXEL)
         image.show()
 
 
