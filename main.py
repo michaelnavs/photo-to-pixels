@@ -32,8 +32,8 @@ def main() -> None:
                 center_x, center_y = center_x_y(
                     x, y
                 )  # get new x and y values based on center of sky region
-                theta, psi = calculate_theta_psi(center_x, center_y)  # get theta
-                # skip pixels that are pure black, pure white, and not blue sky pixels
+                theta, psi = calculate_theta_psi(center_x, center_y)  # get theta, psi
+                # turn pixels to black and skip them that are pure black, pure white, and not within sky region
                 if (
                     is_black(pixel)
                     or is_white(pixel)
@@ -46,11 +46,13 @@ def main() -> None:
                 central_angle = get_central_angle(
                     altitude, azimuth, sun_altitude, sun_azimuth
                 )
-                # if alititude and central angle do not meet the criteria, set RGB value to black
-                if not (selection_criteria(altitude, central_angle)) and not (
-                    is_blue_sky(pixel)
+                # if alititude and central angle do not meet the criteria or pixel is not a blue sky pixel, set RGB value to black
+                if not (is_blue_sky(pixel)) or not (
+                    selection_criteria(altitude, central_angle)
                 ):
                     image.putpixel((x, y), BLACK_PIXEL)
+                    continue
+                print(pixel, x, y)
         image.show()
 
 

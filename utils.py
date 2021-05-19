@@ -36,9 +36,8 @@ def is_blue_sky(pixel):
     return blue_sky_value < 0.08
 
 
-def selection_criteria(altitude, central_angle):
-
-    return 30 < altitude < 60 and 80 < central_angle < 100
+def selection_criteria(altitude, central_angle, pixel):
+    return 30 < altitude < 60 and 80 < central_angle < 100 and is_blue_sky(pixel)
 
 
 def get_altitude(center_x, center_y):
@@ -61,21 +60,31 @@ def get_azimuth(psi):
 def get_central_angle(altitude_point, azimuth_point, altitude_sun, azimuth_sun):
     azimuth_1_2 = azimuth_sun - azimuth_point
 
-    tan_central_angle = (
-        math.sqrt(
-            (
-                math.cos(altitude_point) * math.sin(altitude_sun)
-                - math.sin(altitude_point)
-                * math.cos(altitude_sun)
-                * math.cos(azimuth_1_2)
-            )
-            ** 2
-            + (math.cos(altitude_sun) * math.sin(azimuth_1_2)) ** 2
+    if azimuth_1_2 < -180:
+        azimuth_1_2 += 360
+    elif azimuth_1_2 > 180:
+        azimuth_1_2 -= 360
+
+    altitude_point = math.radians(altitude_point)
+    azimuth_point = math.radians(azimuth_point)
+    altitude_sun = math.radians(altitude_sun)
+    azimuth_sun = math.radians(azimuth_sun)
+    azimuth_1_2 = math.radians(azimuth_1_2)
+
+    numerator = math.sqrt(
+        (
+            math.cos(altitude_point) * math.sin(altitude_sun)
+            - math.sin(altitude_point) * math.cos(altitude_sun) * math.cos(azimuth_1_2)
         )
-    ) / (
-        math.sin(altitude_point) * math.sin(altitude_sun)
-        + math.cos(altitude_point) * math.cos(altitude_sun) * math.cos(azimuth_1_2)
+        ** 2
+        + (math.cos(altitude_sun) * math.sin(azimuth_1_2)) ** 2
     )
+
+    denominator = math.sin(altitude_point) * math.sin(altitude_sun) + math.cos(
+        altitude_point
+    ) * math.cos(altitude_sun) * math.cos(azimuth_1_2)
+
+    tan_central_angle = numerator / denominator
 
     # tangent to radians by atan()
     central_angle = math.atan(tan_central_angle)
