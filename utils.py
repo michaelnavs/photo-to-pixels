@@ -28,9 +28,12 @@ def is_sky_region(x, y, theta):
     return r < rho
 
 
-def is_blue_sky():
-    # ppt slide 13
-    pass
+def is_blue_sky(pixel):
+    r = pixel[0]  # red pixel value
+    g = pixel[1]  # green pixel value
+    blue_sky_value = (2 * abs(r - g)) / (r + g)
+
+    return blue_sky_value < 0.08
 
 
 def selection_criteria():
