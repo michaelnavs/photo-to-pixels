@@ -36,9 +36,10 @@ def is_blue_sky(pixel):
     return blue_sky_value < 0.08
 
 
-def selection_criteria():
-    # ppt slide 13
-    pass
+def selection_criteria(altitude, central_angle):
+    
+    return 30 < altitude < 60 and 80 < central_angle < 100
+
 
 
 def get_altitude(center_x, center_y):
