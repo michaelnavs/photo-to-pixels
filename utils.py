@@ -36,8 +36,8 @@ def is_blue_sky(pixel):
     return blue_sky_value < 0.08
 
 
-def selection_criteria(altitude, central_angle, pixel):
-    return 30 < altitude < 60 and 80 < central_angle < 100 and is_blue_sky(pixel)
+def selection_criteria(altitude, central_angle):
+    return 30 < altitude < 60 and 80 < central_angle < 100
 
 
 def get_altitude(center_x, center_y):

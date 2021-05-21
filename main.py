@@ -51,8 +51,6 @@ def main() -> None:
                     selection_criteria(altitude, central_angle)
                 ):
                     image.putpixel((x, y), BLACK_PIXEL)
-                    continue
-                print(pixel, x, y)
         image.show()
 
 
