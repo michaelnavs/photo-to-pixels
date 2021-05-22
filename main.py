@@ -47,8 +47,8 @@ def main() -> None:
                     altitude, azimuth, sun_altitude, sun_azimuth
                 )
                 # if alititude and central angle do not meet the criteria or pixel is not a blue sky pixel, set RGB value to black
-                if not (is_blue_sky(pixel)) or not (
-                    selection_criteria(altitude, central_angle)
+                if not (selection_criteria(altitude, central_angle)) or not (
+                    is_blue_sky(pixel)
                 ):
                     image.putpixel((x, y), BLACK_PIXEL)
         image.show()
