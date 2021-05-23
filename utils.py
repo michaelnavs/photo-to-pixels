@@ -30,10 +30,10 @@ def is_sky_region(x, y, theta):
 
 def is_blue_sky(pixel):
     r = pixel[0]  # red pixel value
-    g = pixel[1]  # green pixel value
-    blue_sky_value = (2 * abs(r - g)) / (r + g)
+    b = pixel[2]  # green pixel value
+    blue_sky_value = (2 * abs(b - r)) / (r + b)
 
-    return blue_sky_value < 0.08
+    return blue_sky_value > 0.2
 
 
 def selection_criteria(altitude, central_angle):
