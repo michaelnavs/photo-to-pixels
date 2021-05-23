@@ -1,5 +1,4 @@
 from PIL import Image
-import pandas as pd
 import glob
 from utils import (
     calculate_theta_psi,
