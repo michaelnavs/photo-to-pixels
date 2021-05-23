@@ -50,6 +50,7 @@ def main() -> None:
                     is_blue_sky(pixel)
                 ):
                     image.putpixel((x, y), BLACK_PIXEL)
+        image.save("images/ouput.jpg")
         image.show()
 
 
