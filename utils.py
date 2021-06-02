@@ -123,11 +123,13 @@ def calculate_theta_psi(x, y):
 
 
 def get_sun_altitude_azimuth(filename: str, tadj: float, declination: float) -> Tuple:
+    lat = 0.5652  # latitude
     clt = get_clt(filename)  # get clock time in decimal hours
     ast = clt + tadj  # calculate apparent solar time
     has = get_has(ast)  # get hour angle of the sun
-    alt = get_sun_altitude(has, declination)  # get altitude of the sun in radians
-    azi = get_sun_azimuth(has, declination, alt)  # get azimuth of the sun in radians
+    alt = get_sun_altitude(lat, has, declination)  # get altitude of the sun in radians
+    # get azimuth of the sun in radians
+    azi = get_sun_azimuth(lat, has, declination, alt)
 
     # return altitude and azimuth, both in degrees
     return math.degrees(alt), math.degrees(azi)
@@ -143,8 +145,7 @@ def get_has(ast: float) -> float:
     return 0.26179 * (ast - 12)  # calculate hour angle of the sun
 
 
-def get_sun_altitude(has: float, declination: float) -> float:
-    lat = 0.5652  # latitude
+def get_sun_altitude(lat: float, has: float, declination: float) -> float:
     # calculate first portion of the equation
     sin = math.sin(lat) * math.sin(declination)
     # calculate second portion of the equation
@@ -153,8 +154,7 @@ def get_sun_altitude(has: float, declination: float) -> float:
     return 1.5708 - math.acos(sin + cos)
 
 
-def get_sun_azimuth(has: float, declination: float, alt: float) -> float:
-    lat = 0.5652  # latitude
+def get_sun_azimuth(lat: float, has: float, declination: float, alt: float) -> float:
     cos_sin = math.cos(lat) * math.sin(declination)
     sin_cos_cos = math.sin(lat) * math.cos(declination) * math.cos(has)
     sin = math.sin((math.pi / 2) - alt)
