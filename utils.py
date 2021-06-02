@@ -123,11 +123,11 @@ def calculate_theta_psi(x, y):
 
 
 def get_sun_altitude_azimuth(filename: str):
-    clt = get_clock_time(filename)
+    clt = get_clt(filename)  # get clock time in decimal hours
     pass
 
 
-def get_clock_time(filename: str) -> float:
-    hours = int(filename[18:20])
-    minutes = int(filename[20:22])
-    return hours + (minutes / 60)
+def get_clt(filename: str) -> float:
+    hours = int(filename[18:20])  # get hour marker from filename
+    minutes = int(filename[20:22])  # get minute marker from filename
+    return hours + (minutes / 60)  # calculate clock time
