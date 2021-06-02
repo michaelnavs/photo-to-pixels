@@ -124,7 +124,8 @@ def calculate_theta_psi(x, y):
 
 def get_sun_altitude_azimuth(filename: str, tadj: float):
     clt = get_clt(filename)  # get clock time in decimal hours
-    ast = clt + tadj
+    ast = clt + tadj  # calculate apparent solar time
+    has = get_has(ast)  # get hour angle of the sun
     pass
 
 
@@ -132,3 +133,7 @@ def get_clt(filename: str) -> float:
     hours = int(filename[18:20])  # get hour marker from filename
     minutes = int(filename[20:22])  # get minute marker from filename
     return hours + (minutes / 60)  # calculate clock time
+
+
+def get_has(ast: float) -> float:
+    return 0.26179 * (ast - 12)  # calculate hour angle of the sun
