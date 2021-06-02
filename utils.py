@@ -122,8 +122,9 @@ def calculate_theta_psi(x, y):
     return theta, math.degrees(psi)  # theta is in radians, psi is in degrees
 
 
-def get_sun_altitude_azimuth(filename: str):
+def get_sun_altitude_azimuth(filename: str, tadj: float):
     clt = get_clt(filename)  # get clock time in decimal hours
+    ast = clt + tadj
     pass
 
 

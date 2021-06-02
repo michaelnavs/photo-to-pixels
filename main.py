@@ -20,11 +20,13 @@ def main() -> None:
     image_filenames = glob.glob("./images/*.jpg")
     image_filenames.sort()  # alaphabetically sort the list of file names
 
-    for image_filename in image_filenames:
+    tadjs = [0.08611111, 0.05472222, 0.03527778]
+
+    for i, image_filename in enumerate(image_filenames):
         print(f"{image_filename}...")  # display file name to see progress
         image = Image.open(image_filename)  # create instance of Pillow.Image
         width, height = image.size
-        sun_altitude, sun_azimuth = get_sun_altitude_azimuth(image_filename)
+        sun_altitude, sun_azimuth = get_sun_altitude_azimuth(image_filename, tadjs[i])
         for x in range(width):
             for y in range(height):
                 pixel = image.getpixel((x, y))  # tuple of RGB values -> (R, G, B)
