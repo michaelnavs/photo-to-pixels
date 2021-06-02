@@ -120,3 +120,7 @@ def calculate_theta_psi(x, y):
         psi = theta - math.pi / 2
 
     return theta, math.degrees(psi)  # theta is in radians, psi is in degrees
+
+
+def get_sun_altitude_azimuth(filename: str):
+    pass

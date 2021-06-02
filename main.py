@@ -11,26 +11,25 @@ from utils import (
     get_azimuth,
     get_central_angle,
     selection_criteria,
+    get_sun_altitude_azimuth,
 )
 
 
 def main() -> None:
     BLACK_PIXEL = (0, 0, 0)
     image_filenames = glob.glob("./images/*.jpg")
-    # image_filenames.sort() # alaphabetically sort the list of file names
+    image_filenames.sort()  # alaphabetically sort the list of file names
 
     for image_filename in image_filenames:
         print(f"{image_filename}...")  # display file name to see progress
         image = Image.open(image_filename)  # create instance of Pillow.Image
         width, height = image.size
-        sun_altitude = 45.6  # sun_altitudes[i]
-        sun_azimuth = 131.1  # sun_azimuths[i]
+        sun_altitude, sun_azimuth = get_sun_altitude_azimuth(image_filename)
         for x in range(width):
             for y in range(height):
                 pixel = image.getpixel((x, y))  # tuple of RGB values -> (R, G, B)
-                center_x, center_y = center_x_y(
-                    x, y
-                )  # get new x and y values based on center of sky region
+                # get new x and y values based on center of sky region
+                center_x, center_y = center_x_y(x, y)
                 theta, psi = calculate_theta_psi(center_x, center_y)  # get theta, psi
                 # turn pixels to black and skip them that are pure black, pure white, and not within sky region
                 if (
