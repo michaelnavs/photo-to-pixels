@@ -21,12 +21,15 @@ def main() -> None:
     image_filenames.sort()  # alaphabetically sort the list of file names
 
     tadjs = [0.08611111, 0.05472222, 0.03527778]
+    declinations = [-0.3671597, -0.3455368, -0.1360118]
 
     for i, image_filename in enumerate(image_filenames):
         print(f"{image_filename}...")  # display file name to see progress
         image = Image.open(image_filename)  # create instance of Pillow.Image
         width, height = image.size
-        sun_altitude, sun_azimuth = get_sun_altitude_azimuth(image_filename, tadjs[i])
+        sun_altitude, sun_azimuth = get_sun_altitude_azimuth(
+            image_filename, tadjs[i], declinations[i]
+        )
         for x in range(width):
             for y in range(height):
                 pixel = image.getpixel((x, y))  # tuple of RGB values -> (R, G, B)
@@ -51,7 +54,8 @@ def main() -> None:
                     is_blue_sky(pixel)
                 ):
                     image.putpixel((x, y), BLACK_PIXEL)
-        image.save("images/ouput.jpg")
+        new_filename = image_filename[:-4] + "_output.jpg"
+        image.save(new_filename)
         image.show()
 
 
