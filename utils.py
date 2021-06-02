@@ -122,10 +122,11 @@ def calculate_theta_psi(x, y):
     return theta, math.degrees(psi)  # theta is in radians, psi is in degrees
 
 
-def get_sun_altitude_azimuth(filename: str, tadj: float):
+def get_sun_altitude_azimuth(filename: str, tadj: float, declination: float):
     clt = get_clt(filename)  # get clock time in decimal hours
     ast = clt + tadj  # calculate apparent solar time
     has = get_has(ast)  # get hour angle of the sun
+    altitude = get_sun_altitude(has, declination)  # get altitude of the sun in radians
     pass
 
 
@@ -137,3 +138,12 @@ def get_clt(filename: str) -> float:
 
 def get_has(ast: float) -> float:
     return 0.26179 * (ast - 12)  # calculate hour angle of the sun
+
+
+def get_sun_altitude(has: float, declination: float) -> float:
+    lat = 0.5652  # latitude
+
+    sin = math.sin(lat) * math.sin(declination)
+    cos = math.cos(lat) * math.cos(declination) * math.cos(has)
+
+    return 1.5708 - math.acos(sin + cos)
