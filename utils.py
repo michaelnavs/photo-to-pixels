@@ -31,7 +31,7 @@ def is_sky_region(x, y, theta):
 def is_blue_sky(pixel):
     r = pixel[0]  # red pixel value
     b = pixel[2]  # green pixel value
-    blue_sky_value = (2 * abs(b - r)) / (r + b)
+    blue_sky_value = (2 * (b - r)) / (r + b)
 
     return blue_sky_value > 0.2
 
