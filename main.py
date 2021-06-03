@@ -54,7 +54,7 @@ def main() -> None:
                     is_blue_sky(pixel)
                 ):
                     image.putpixel((x, y), BLACK_PIXEL)
-        new_filename = image_filename[:-4] + "_output.jpg"
+        new_filename = image_filename[:9] + "output/" + image_filename[9:]
         image.save(new_filename)
         image.show()
 
