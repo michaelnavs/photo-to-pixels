@@ -1,5 +1,6 @@
 from PIL import Image
 import glob
+import sys
 from utils import (
     calculate_theta_psi,
     center_x_y,
@@ -15,7 +16,7 @@ from utils import (
 )
 
 
-def main() -> None:
+def main(sc: float) -> None:
     BLACK_PIXEL = (0, 0, 0)
     image_filenames = glob.glob("./images/*.jpg")
     image_filenames.sort()  # alaphabetically sort the list of file names
@@ -51,7 +52,7 @@ def main() -> None:
                 )
                 # if alititude and central angle do not meet the criteria or pixel is not a blue sky pixel, set RGB value to black
                 if not (selection_criteria(altitude, central_angle)) or not (
-                    is_blue_sky(pixel)
+                    is_blue_sky(pixel, sc)
                 ):
                     image.putpixel((x, y), BLACK_PIXEL)
         new_filename = image_filename[:9] + "output/" + image_filename[9:]
@@ -60,4 +61,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    main(float(sys.argv[1]))
