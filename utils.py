@@ -1,6 +1,7 @@
 from typing import Tuple
 
 import math
+import statistics
 
 
 def center_x_y(x: int, y: int) -> Tuple:
@@ -28,12 +29,11 @@ def is_sky_region(x, y, theta):
     return r < rho
 
 
-def is_blue_sky(pixel, sc):
-    r = pixel[0]  # red pixel value
-    b = pixel[2]  # green pixel value
-    blue_sky_value = (2 * (b - r)) / (r + b)
+def is_blue_sky(pixel):
+    avg = statistics.mean(pixel)
+    std = statistics.stdev(pixel)
 
-    return blue_sky_value > sc
+    return std / avg > 0.1
 
 
 def selection_criteria(altitude, central_angle):
