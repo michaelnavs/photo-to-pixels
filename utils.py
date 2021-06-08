@@ -31,7 +31,7 @@ def is_sky_region(x, y, theta):
 
 def is_blue_sky(pixel):
     avg = statistics.mean(pixel)
-    std = statistics.stdev(pixel)
+    std = statistics.stdev(pixel, xbar=avg)
 
     return std / avg > 0.1
 
