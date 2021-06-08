@@ -22,25 +22,25 @@ def is_white(pixel: Tuple) -> bool:
     return pixel == (255, 255, 255)
 
 
-def is_sky_region(x, y, theta):
+def is_sky_region(x: int, y: int, theta: float) -> bool:
     r = math.sqrt(x ** 2 + y ** 2)
     rho = calculate_rho(theta)
 
     return r < rho
 
 
-def is_blue_sky(pixel):
+def is_blue_sky(pixel: Tuple) -> bool:
     avg = statistics.mean(pixel)
     std = statistics.stdev(pixel, xbar=avg)
 
     return std / avg > 0.1
 
 
-def selection_criteria(altitude, central_angle):
+def selection_criteria(altitude: float, central_angle: float) -> bool:
     return 30 < altitude < 60 and 80 < central_angle < 100
 
 
-def get_altitude(center_x, center_y):
+def get_altitude(center_x: float, center_y: float) -> float:
     # e is epsilon
     e = 0.417
 
@@ -51,13 +51,15 @@ def get_altitude(center_x, center_y):
     return altitude
 
 
-def get_azimuth(psi):
+def get_azimuth(psi: float) -> float:
     azimuth = 0.9625 * psi + 1.7688
 
     return azimuth
 
 
-def get_central_angle(altitude_point, azimuth_point, altitude_sun, azimuth_sun):
+def get_central_angle(
+    altitude_point: float, azimuth_point: float, altitude_sun: float, azimuth_sun: float
+) -> float:
     azimuth_1_2 = azimuth_sun - azimuth_point
 
     if azimuth_1_2 < -180:
@@ -95,7 +97,7 @@ def get_central_angle(altitude_point, azimuth_point, altitude_sun, azimuth_sun):
     return math.degrees(central_angle)
 
 
-def calculate_rho(theta):
+def calculate_rho(theta: float) -> float:
     A = 240
     B = 218
 
@@ -106,7 +108,7 @@ def calculate_rho(theta):
     return rho
 
 
-def calculate_theta_psi(x, y):
+def calculate_theta_psi(x: float, y: float) -> Tuple:
     theta = psi = 0
 
     if x > 0 and y > 0:
