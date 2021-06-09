@@ -33,7 +33,9 @@ def is_blue_sky(pixel: Tuple) -> bool:
     avg = statistics.mean(pixel)
     std = statistics.stdev(pixel, xbar=avg)
 
-    return std / avg > 0.1
+    blue_minus_red = pixel[2] - pixel[0]
+
+    return std / avg > 0.3 and blue_minus_red > 40
 
 
 def selection_criteria(altitude: float, central_angle: float) -> bool:
