@@ -1,6 +1,7 @@
 from typing import Tuple
 
 import math
+import statistics
 
 
 def center_x_y(x: int, y: int) -> Tuple:
@@ -29,29 +30,12 @@ def is_sky_region(x: int, y: int, theta: float) -> bool:
 
 
 def is_blue_sky(pixel: Tuple) -> bool:
-    red = pixel[0]
-    green = pixel[1]
-    blue = pixel[2]
+    avg = statistics.mean(pixel)
+    std = statistics.stdev(pixel, xbar=avg)
 
-    sqrt_of_sum_of_colors_squared = math.sqrt((red ** 2) + (blue ** 2) + (green ** 2))
+    blue_minus_red = pixel[2] - pixel[0]
 
-    return (
-        is_red_dir_cos(red, sqrt_of_sum_of_colors_squared)
-        and is_green_dir_cos(green, sqrt_of_sum_of_colors_squared)
-        and is_blue_dir_cos(blue, sqrt_of_sum_of_colors_squared)
-    )
-
-
-def is_red_dir_cos(red_value: float, sqrt_sum_of_colors_squared: float) -> bool:
-    return red_value / sqrt_sum_of_colors_squared < 0.52
-
-
-def is_green_dir_cos(green_value: float, sqrt_sum_of_colors_squared: float) -> bool:
-    return green_value / sqrt_sum_of_colors_squared < 0.48
-
-
-def is_blue_dir_cos(blue_value: float, sqrt_sum_of_colors_squared: float) -> bool:
-    return blue_value / sqrt_sum_of_colors_squared > 0.675
+    return std / avg > 0.3 and blue_minus_red > 40
 
 
 def selection_criteria(altitude: float, central_angle: float) -> bool:
