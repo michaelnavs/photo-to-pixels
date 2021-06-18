@@ -60,12 +60,16 @@ def main() -> None:
                     is_blue_sky(pixel)
                 ):
                     image.putpixel((x, y), BLACK_PIXEL)
+        # rename file to ./image/output/*.jpg
         new_filename = image_filename[:9] + "output/" + image_filename[9:]
         image.save(new_filename)
-        reshaped_image = np.array(image).reshape(width * height, 3)
-        clf.fit(reshaped_image)
-        cluster_img = clf.labels_.reshape(height, width)
-        plt.matshow(cluster_img)
+        reshaped_image = np.array(image).reshape(
+            width * height, 3
+        )  # reshape the image to 345600x3
+        clf.fit(reshaped_image)  # cluster the image
+        cluster_img = clf.labels_.reshape(height, width)  # reshape the clusters to 2d
+        plt.matshow(cluster_img)  # show the clusters
+        # save the clustered image to ./image/output/*_cluster.jpg
         plt.savefig(new_filename[:39] + "_cluster" + new_filename[39:])
         plt.show()
 
