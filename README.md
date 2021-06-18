@@ -1,7 +1,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <img src="./logo.jpeg" alt="Logo" width="80">
+  <img src="https://mjn-reame-logos.s3.us-east-2.amazonaws.com/pixelize.jpeg" alt="Logo" width="80">
 
   <h3 align="center">Photo To Pixels</h3>
 
@@ -15,7 +15,7 @@
 ## About The Project
 
 Apart of my NSF Research project, I was tasked with taking images of the sky
-and creating a dataset of RGB values. In the Version 1, for each image, I had
+and creating a dataset of RGB values. In Version 1, for each image, I had
 to create 25 10x10 patches, then add the rgb values for each pixel in the 10x10 to
 an excel sheet. In a seperate program, I attached turbidity values to the end
 of each row of data. In Version 2, for each pixel, I calculated a ratio of Blue/Green
