@@ -1,6 +1,9 @@
 from PIL import Image
 import glob
 import sys
+from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt
+import numpy as np
 from utils import (
     calculate_theta_psi,
     center_x_y,
@@ -23,6 +26,8 @@ def main() -> None:
 
     tadjs = [0.08611111, 0.05472222, 0.03527778]
     declinations = [-0.3671597, -0.3455368, -0.1360118]
+
+    clf = KMeans(n_clusters=3)
 
     for i, image_filename in enumerate(image_filenames):
         print(f"{image_filename}...")  # display file name to see progress
@@ -57,7 +62,12 @@ def main() -> None:
                     image.putpixel((x, y), BLACK_PIXEL)
         new_filename = image_filename[:9] + "output/" + image_filename[9:]
         image.save(new_filename)
-        image.show()
+        reshaped_image = np.array(image).reshape(width * height, 3)
+        clf.fit(reshaped_image)
+        cluster_img = clf.labels_.reshape(height, width)
+        plt.matshow(cluster_img)
+        plt.savefig(new_filename[:39] + "_cluster" + new_filename[39:])
+        plt.show()
 
 
 if __name__ == "__main__":
