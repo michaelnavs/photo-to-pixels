@@ -27,7 +27,16 @@ def main() -> None:
     tadjs = [0.08611111, 0.05472222, 0.03527778]
     declinations = [-0.3671597, -0.3455368, -0.1360118]
 
-    clf = KMeans(n_clusters=3)
+    startpoints = np.array([(0, 0, 0), (145, 142, 149), (29, 30, 60)])
+    clf = KMeans(n_clusters=3, init=startpoints)
+
+    """
+    since we gave initial cneters, n_init is set to 1 instead of 10,
+
+    n_init: int, default=10
+    Number of time the k-means algorithm will be run with different centroid seeds. 
+    The final results will be the best output of n_init consecutive runs in terms of inertia.
+    """
 
     for i, image_filename in enumerate(image_filenames):
         print(f"{image_filename}...")  # display file name to see progress
