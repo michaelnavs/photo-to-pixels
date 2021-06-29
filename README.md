@@ -15,12 +15,7 @@
 ## About The Project
 
 Apart of my NSF Research project, I was tasked with taking images of the sky
-and creating a dataset of RGB values. In Version 1, for each image, I had
-to create 25 10x10 patches, then add the rgb values for each pixel in the 10x10 to
-an excel sheet. In a seperate program, I attached turbidity values to the end
-of each row of data. In Version 2, for each pixel, I calculated a ratio of Blue/Green
-and created a new dataset with those ratio values. Again, the turbidity values
-were appended to the end of each row.
+and creating a dataset of RGB values.
 
 ### Built With
 
