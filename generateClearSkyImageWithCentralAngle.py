@@ -1,7 +1,41 @@
 from typing import Tuple
+from PIL import Image
+import math, statistics
 
-import math
-import statistics
+
+def generateClearSkyImage(filename: str, tadj: float, declination: float) -> None:
+    BLACK_PIXEL = (0, 0, 0)
+    img = Image.open(filename)
+    width, height = img.size
+    sun_altitude, sun_azimuth = get_sun_altitude_azimuth(filename, tadj, declination)
+    for x in range(width):
+        for y in range(height):
+            pixel = img.getpixel((x, y))  # tuple of RGB values -> (R, G, B)
+            # get new x and y values based on center of sky region
+            center_x, center_y = center_x_y(x, y)
+            theta, psi = calculate_theta_psi(center_x, center_y)  # get theta, psi
+            # turn pixels to black and skip them that are pure black, pure white, and not within sky region
+            if (
+                is_black(pixel)
+                or is_white(pixel)
+                or not (is_sky_region(center_x, center_y, theta))
+            ):
+                img.putpixel((x, y), BLACK_PIXEL)
+                continue
+            altitude = get_altitude(center_x, center_y)
+            azimuth = get_azimuth(psi)
+            central_angle = get_central_angle(
+                altitude, azimuth, sun_altitude, sun_azimuth
+            )
+            # if alititude and central angle do not meet the criteria or pixel is not a blue sky pixel, set RGB value to black
+            if not (selection_criteria(altitude, central_angle)) or not (
+                is_blue_sky(pixel)
+            ):
+                img.putpixel((x, y), BLACK_PIXEL)
+    # rename file to ./image/output/*.jpg
+    new_filename = filename[:9] + "output/" + filename[9:]
+    img.save(new_filename)
+    img.show()
 
 
 def center_x_y(x: int, y: int) -> Tuple:
@@ -33,7 +67,7 @@ def is_blue_sky(pixel: Tuple) -> bool:
     avg = statistics.mean(pixel)
     std = statistics.stdev(pixel, xbar=avg)
 
-    return std / avg > 0.3
+    return std / avg > 0.1
 
 
 def selection_criteria(altitude: float, central_angle: float) -> bool:
