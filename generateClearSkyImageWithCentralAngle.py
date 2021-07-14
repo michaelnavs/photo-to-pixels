@@ -1,11 +1,13 @@
 from typing import Tuple
+from cloudIdentification import cloudIdentification
 from PIL import Image
-import math, statistics
+import math
 
 
 def generateClearSkyImage(filename: str, tadj: float, declination: float) -> None:
     BLACK_PIXEL = (0, 0, 0)
-    img = Image.open(filename)
+    blue_sky = cloudIdentification(filename)
+    img = Image.fromarray(blue_sky, "RGB")
     width, height = img.size
     sun_altitude, sun_azimuth = get_sun_altitude_azimuth(filename, tadj, declination)
     for x in range(width):
@@ -13,29 +15,19 @@ def generateClearSkyImage(filename: str, tadj: float, declination: float) -> Non
             pixel = img.getpixel((x, y))  # tuple of RGB values -> (R, G, B)
             # get new x and y values based on center of sky region
             center_x, center_y = center_x_y(x, y)
-            theta, psi = calculate_theta_psi(center_x, center_y)  # get theta, psi
-            # turn pixels to black and skip them that are pure black, pure white, and not within sky region
-            if (
-                is_black(pixel)
-                or is_white(pixel)
-                or not (is_sky_region(center_x, center_y, theta))
-            ):
-                img.putpixel((x, y), BLACK_PIXEL)
-                continue
+            psi = calculate_psi(center_x, center_y)  # get psi
             altitude = get_altitude(center_x, center_y)
             azimuth = get_azimuth(psi)
             central_angle = get_central_angle(
                 altitude, azimuth, sun_altitude, sun_azimuth
             )
             # if alititude and central angle do not meet the criteria or pixel is not a blue sky pixel, set RGB value to black
-            if not (selection_criteria(altitude, central_angle)) or not (
-                is_blue_sky(pixel)
-            ):
+            if not (selection_criteria(altitude, central_angle)):
                 img.putpixel((x, y), BLACK_PIXEL)
-    # rename file to ./image/output/*.jpg
-    new_filename = filename[:9] + "output/" + filename[9:]
+
+    # save output images as images/output/<date>/<image_name>
+    new_filename = f"{filename[:9]}output/{filename[9:]}"
     img.save(new_filename)
-    img.show()
 
 
 def center_x_y(x: int, y: int) -> Tuple:
@@ -46,28 +38,6 @@ def center_x_y(x: int, y: int) -> Tuple:
     new_y = origin_y - y
 
     return new_x, new_y
-
-
-def is_black(pixel: Tuple) -> bool:
-    return pixel == (0, 0, 0)
-
-
-def is_white(pixel: Tuple) -> bool:
-    return pixel == (255, 255, 255)
-
-
-def is_sky_region(x: int, y: int, theta: float) -> bool:
-    r = math.sqrt(x ** 2 + y ** 2)
-    rho = calculate_rho(theta)
-
-    return r < rho
-
-
-def is_blue_sky(pixel: Tuple) -> bool:
-    avg = statistics.mean(pixel)
-    std = statistics.stdev(pixel, xbar=avg)
-
-    return std / avg > 0.1
 
 
 def selection_criteria(altitude: float, central_angle: float) -> bool:
@@ -131,18 +101,7 @@ def get_central_angle(
     return math.degrees(central_angle)
 
 
-def calculate_rho(theta: float) -> float:
-    A = 240
-    B = 218
-
-    rho = (A * B) / (
-        math.sqrt((B ** 2) * (math.cos(theta) ** 2) + (A ** 2 * math.sin(theta) ** 2))
-    )
-
-    return rho
-
-
-def calculate_theta_psi(x: float, y: float) -> Tuple:
+def calculate_psi(x: float, y: float) -> float:
     theta = psi = 0
 
     if x > 0 and y > 0:
@@ -155,7 +114,7 @@ def calculate_theta_psi(x: float, y: float) -> Tuple:
         theta = math.pi + math.atan(y / x)
         psi = theta - math.pi / 2
 
-    return theta, math.degrees(psi)  # theta is in radians, psi is in degrees
+    return math.degrees(psi)  # psi is in degrees
 
 
 def get_sun_altitude_azimuth(filename: str, tadj: float, declination: float) -> Tuple:
@@ -171,9 +130,10 @@ def get_sun_altitude_azimuth(filename: str, tadj: float, declination: float) -> 
     return math.degrees(alt), math.degrees(azi)
 
 
-def get_clt(filename: str) -> float:
-    hours = int(filename[18:20])  # get hour marker from filename
-    minutes = int(filename[20:22])  # get minute marker from filename
+def get_clt(filename: str):
+    # filename = ./images/20130916/20130916_0900.jpg
+    hours = int(filename[27:29])  # get hour marker from filename
+    minutes = int(filename[29:31])  # get minute marker from filename
     return hours + (minutes / 60)  # calculate clock time
 
 
@@ -194,7 +154,12 @@ def get_sun_azimuth(lat: float, has: float, declination: float, alt: float) -> f
     cos_sin = math.cos(lat) * math.sin(declination)
     sin_cos_cos = math.sin(lat) * math.cos(declination) * math.cos(has)
     sin = math.sin((math.pi / 2) - alt)
-    azi = math.acos((cos_sin - sin_cos_cos) / sin)
+    num = (cos_sin - sin_cos_cos) / sin
+    if num < -1:
+        num = -1
+    elif num > 1:
+        num = 1
+    azi = math.acos(num)
 
     if has > 0:
         azi = 2 * math.pi - azi
